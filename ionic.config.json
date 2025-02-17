@@ -1,0 +1,7 @@
+{
+  "name": "hotel_miraflores",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
