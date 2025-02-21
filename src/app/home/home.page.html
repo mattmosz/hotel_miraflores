@@ -1,4 +1,4 @@
-<ion-header [translucent]="true">
+<ion-header [translucent]="false">
   <ion-toolbar>
     <ion-title>
       Hotel Miraflores
@@ -6,57 +6,28 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" style="overflow-y: auto;">
   <div style="text-align: center; margin-top: 20px;">
     <img src="assets/imgs/logo hotel.jpg" alt="Hotel Logo" style="width: 100px; height: auto;">
     <h2>Bienvenidos</h2>
+    <p>Bienvenidos al Hotel Miraflores, donde ofrecemos una experiencia única y confortable para todos nuestros huéspedes. Disfruta de nuestras instalaciones y servicios de primera clase.</p>
   </div>
 
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>Habitación Estándar</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <img src="assets/habitacion_estandar.jpg" alt="Habitación Estándar" style="width: 100%; height: auto;">
-      <p>Estilo: Moderno</p>
-      <p>Capacidad: 2 personas</p>
-      <p>Descripción: Habitación cómoda con todas las comodidades básicas.</p>
-    </ion-card-content>
-  </ion-card>
-
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>Habitación Deluxe</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <img src="assets/habitacion_deluxe.jpg" alt="Habitación Deluxe" style="width: 100%; height: auto;">
-      <p>Estilo: Lujo</p>
-      <p>Capacidad: 4 personas</p>
-      <p>Descripción: Habitación espaciosa con vistas al mar y servicios premium.</p>
-    </ion-card-content>
-  </ion-card>
+  <div style="margin-top: 20px;">
+    <h3 style="text-align: center;">Nuestras Habitaciones</h3>
+    <div *ngFor="let habitacion of habitaciones">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>{{ habitacion.estilo_habitacion }}</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <img [src]="habitacion.imagen" alt="{{ habitacion.titulo }}" style="width: 100%; height: auto;">
+          <p>Precio: {{ habitacion.precio_noche }}</p>
+          <p>Capacidad: {{ habitacion.capacidad_habitacion }}</p>
+          <p>Descripción: {{ habitacion.descripcion_habitacion }}</p>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </div>
 </ion-content>
 
-<ion-tabs>
-  <ion-tab-bar slot="bottom">
-    <ion-tab-button tab="home">
-      <ion-icon name="home"></ion-icon>
-      <ion-label>Inicio</ion-label>
-    </ion-tab-button>
-
-    <ion-tab-button tab="rooms">
-      <ion-icon name="bed"></ion-icon>
-      <ion-label>Habitaciones</ion-label>
-    </ion-tab-button>
-
-    <ion-tab-button tab="services">
-      <ion-icon name="construct"></ion-icon>
-      <ion-label>Servicios</ion-label>
-    </ion-tab-button>
-
-    <ion-tab-button tab="contact">
-      <ion-icon name="call"></ion-icon>
-      <ion-label>Contacto</ion-label>
-    </ion-tab-button>
-  </ion-tab-bar>
-</ion-tabs>
