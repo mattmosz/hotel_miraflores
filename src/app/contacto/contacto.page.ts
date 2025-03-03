@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { EmpresaService } from '../servicio/empresa.service';
 
 @Component({
   selector: 'app-contacto',
@@ -7,10 +8,15 @@ import { Component, OnInit } from '@angular/core';
   standalone: false
 })
 export class ContactoPage implements OnInit {
+  empresa: any;
 
-  constructor() { }
+  constructor(private empresaService: EmpresaService) { }
 
   ngOnInit() {
+    this.empresaService.getEmpresa().subscribe(data => {
+      if (data && data.length > 0) {
+        this.empresa = data[0];
+      }
+    });
   }
-
 }
