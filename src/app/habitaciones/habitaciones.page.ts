@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { HabitacionesService } from '../servicio/habitaciones.service';
 
 @Component({
   selector: 'app-habitaciones',
@@ -7,10 +8,13 @@ import { Component, OnInit } from '@angular/core';
   standalone: false
 })
 export class HabitacionesPage implements OnInit {
+  habitaciones: any[] = [];
 
-  constructor() { }
+  constructor(private habitacionesService: HabitacionesService) { }
 
   ngOnInit() {
+    this.habitacionesService.getHabitaciones().subscribe(data => {
+      this.habitaciones = data;
+    });
   }
-
 }
