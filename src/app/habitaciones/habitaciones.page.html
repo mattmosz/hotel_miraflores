@@ -13,10 +13,14 @@
           <ion-card-title>{{ habitacion.estilo_habitacion }}</ion-card-title>
         </ion-card-header>
         <ion-card-content>
-            <img [src]="'assets/imgs/habitaciones/' + habitacion.foto_habitacion" alt="{{ habitacion.titulo }}" style="width: 100%; height: auto;">
+          <img [src]="'assets/imgs/habitaciones/' + habitacion.foto_habitacion" alt="{{ habitacion.titulo }}" style="width: 100%; height: auto;">
           <p>Precio: {{ habitacion.precio_noche }}</p>
           <p>Capacidad: {{ habitacion.capacidad_habitacion }}</p>
           <p>Descripción: {{ habitacion.descripcion_habitacion }}</p>
+          <ion-button expand="full" class="reservar-button">
+            <ion-icon slot="start" name="bed-outline"></ion-icon>
+            Reservar
+          </ion-button>
         </ion-card-content>
       </ion-card>
     </div>

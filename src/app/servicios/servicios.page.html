@@ -1,13 +1,22 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>servicios</ion-title>
+    <ion-title>Servicios</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">servicios</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <div style="margin-top: 20px;">
+    <h3 style="text-align: center;">Nuestros Servicios</h3>
+    <div *ngFor="let servicio of servicios">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>{{ servicio.titulo_servicio }}</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <img [src]="'assets/imgs/servicios/' + servicio.icono_servicio" alt="{{ servicio.nombre_servicio }}" style="width: 100%; height: auto;">
+          <p>Descripción: {{ servicio.descripcion_servicio }}</p>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </div>
 </ion-content>

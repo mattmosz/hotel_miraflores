@@ -88,8 +88,18 @@
   
   /* Estilos para ion-title */
   ion-title {
-    color: #ff9800;
-    font-size: 24px; 
-    font-weight: bold; 
-    text-align: center; 
+    color: #ff9800; /* Cambia el color del título */
+    font-size: 24px; /* Ajusta el tamaño de la fuente */
+    font-weight: bold; /* Haz que el título sea negrita */
+    text-align: center; /* Centra el título */
+  }
+  
+  /* Estilos para el botón Reservar */
+  .reservar-button {
+    --background: #007bff; /* Color azul */
+    --background-activated: #0056b3;
+    --background-focused: #007bff;
+    --background-hover: #0056b3;
+    --color: #fff;
+    margin-top: 10px;
   }
