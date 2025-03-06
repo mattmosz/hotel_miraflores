@@ -14,5 +14,11 @@ class HabitacionesModel {
         $result = mysqli_query($this->conn, $query);
         return $result;
     }
+
+    public function uno($id) {
+        $query = "SELECT * FROM habitaciones WHERE id_habitacion = $id";
+        $result = mysqli_query($this->conn, $query);
+        return $result;
+    }
 }
 ?>
