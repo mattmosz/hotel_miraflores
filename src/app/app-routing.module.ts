@@ -1,34 +1,14 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { TabsComponent } from './tabs/tabs.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: TabsComponent,
-    children: [
-      {
-        path: 'home',
-        loadChildren: () => import('./home/home.module').then(m => m.HomePageModule)
-      },
-      {
-        path: 'habitaciones',
-        loadChildren: () => import('./habitaciones/habitaciones.module').then(m => m.HabitacionesPageModule)
-      },
-      {
-        path: 'servicios',
-        loadChildren: () => import('./servicios/servicios.module').then(m => m.ServiciosPageModule)
-      },
-      {
-        path: 'contacto',
-        loadChildren: () => import('./contacto/contacto.module').then(m => m.ContactoPageModule)
-      },
-      {
-        path: '',
-        redirectTo: '/home',
-        pathMatch: 'full'
-      }
-    ]
+    loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsModule)
+  },
+  {
+    path: 'reserva',
+    loadChildren: () => import('./reserva/reserva.module').then(m => m.ReservaPageModule)
   }
 ];
 
@@ -38,4 +18,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

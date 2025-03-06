@@ -1,11 +1,11 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http'; // Importar HttpClientModule
+
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { TabsModule } from './tabs/tabs.module';
-import { HttpClientModule } from '@angular/common/http'; // Importa HttpClientModule
 
 @NgModule({
   declarations: [AppComponent],
@@ -13,10 +13,10 @@ import { HttpClientModule } from '@angular/common/http'; // Importa HttpClientMo
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
-    TabsModule,
-    HttpClientModule // Asegúrate de que HttpClientModule esté importado aquí
+    HttpClientModule // Añadir HttpClientModule a los imports
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class AppModule { }
+export class AppModule {}

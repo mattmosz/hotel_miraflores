@@ -14,4 +14,9 @@ export class HabitacionesService {
   getHabitaciones(): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}?op=todos`);
   }
+
+  getHabitacion(id: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}?op=uno&id=${id}`); // Pasar el ID como parámetro en la URL
+  }
+
 }

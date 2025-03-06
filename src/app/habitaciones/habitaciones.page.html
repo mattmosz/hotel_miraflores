@@ -17,7 +17,7 @@
           <p>Precio: {{ habitacion.precio_noche }}</p>
           <p>Capacidad: {{ habitacion.capacidad_habitacion }}</p>
           <p>Descripción: {{ habitacion.descripcion_habitacion }}</p>
-          <ion-button expand="full" class="reservar-button">
+          <ion-button expand="full" class="reservar-button" (click)="openReservaModal(habitacion.id_habitacion)">
             <ion-icon slot="start" name="bed-outline"></ion-icon>
             Reservar
           </ion-button>
