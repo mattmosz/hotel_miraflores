@@ -9,6 +9,7 @@ $method = $_SERVER['REQUEST_METHOD'];
 if ($method == "OPTIONS") {
     die();
 }
+//
 
 require_once __DIR__ . '/../models/usuarios.model.php'; 
 error_reporting(0);
