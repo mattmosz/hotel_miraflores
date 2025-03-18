@@ -74,6 +74,17 @@ export class ReservaPage implements OnInit {
   }
 
   iniciarSesion() {
+
+    const datosReserva = {
+      habitacionId: this.habitacionId,
+      fechaInicio: this.fechaInicio,
+      fechaSalida: this.fechaSalida
+    };
+
+    this.modalController.dismiss().then(() => {
+      window.localStorage.setItem('datosReserva', JSON.stringify(datosReserva));
+      window.location.href = '/login';
+    });
     
   }
 }

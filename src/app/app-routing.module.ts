@@ -9,6 +9,10 @@ const routes: Routes = [
   {
     path: 'reserva',
     loadChildren: () => import('./reserva/reserva.module').then(m => m.ReservaPageModule)
+  },
+  {
+    path: 'login',
+    loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
   }
 ];
 
