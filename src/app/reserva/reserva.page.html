@@ -10,11 +10,12 @@
 <ion-content>
   <ion-card>
     <ion-card-header>
-      <ion-card-title>Habitación {{ habitacion?.estilo_habitacion }}</ion-card-title>
+      <ion-card-title style="font-size: 1.5em; font-weight: bold;">Habitación {{ habitacion?.estilo_habitacion }}</ion-card-title>
     </ion-card-header>
     <ion-card-content>
       <div style="text-align: center; margin-top: 20px;">
         <div *ngIf="habitacion">
+          <h3>{{ habitacion?.estilo_habitacion }}</h3>
           <img [src]="'assets/imgs/habitaciones/' + habitacion?.foto_habitacion" alt="{{ habitacion?.titulo }}" style="width: 100%; height: auto;">
           <p>Precio/Noche: {{ habitacion?.precio_noche }}</p>
           <p>Capacidad: {{ habitacion?.capacidad_habitacion }}</p>
@@ -24,6 +25,36 @@
           <p>Cargando detalles de la habitación...</p>
         </div>
       </div>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Calendario para escoger fechas de reserva -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Selecciona las fechas de reserva</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item class="custom-item">
+        <ion-label>Fecha de inicio</ion-label>
+        <ion-datetime-button datetime="datetimeInicio"></ion-datetime-button>
+        <ion-modal [keepContentsMounted]="true">
+          <ng-template>
+            <ion-datetime id="datetimeInicio" presentation="date" [(ngModel)]="fechaInicio"></ion-datetime>
+          </ng-template>
+        </ion-modal>
+      </ion-item>
+      <ion-item class="custom-item">
+        <ion-label>Fecha de fin</ion-label>
+        <ion-datetime-button datetime="datetimeFin"></ion-datetime-button>
+        <ion-modal [keepContentsMounted]="true">
+          <ng-template>
+            <ion-datetime id="datetimeFin" presentation="date" [(ngModel)]="fechaFin"></ion-datetime>
+          </ng-template>
+        </ion-modal>
+      </ion-item>
+      <ion-item class="custom-item center-item">
+        <ion-button expand="block" (click)="comprobarDisponibilidad()">Verificar disponibilidad</ion-button>
+      </ion-item>
     </ion-card-content>
   </ion-card>
 </ion-content>
