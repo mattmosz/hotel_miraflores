@@ -11,13 +11,15 @@ export class ReservasService {
 
   constructor(private http: HttpClient) { }
 
-  comprobarDisponibilidad(habitacionId: number, fechaInicio: string, fechaFin: string): Observable<any> {
+  comprobarDisponibilidad(habitacionId: number, fechaInicio: string, fechaSalida: string): Observable<any> {
     const params = {
       op: 'disponibilidad',
       habitacionId: habitacionId.toString(),
       fechaInicio: fechaInicio.split('T')[0], // Formatear la fecha a YYYY-MM-DD
-      fechaFin: fechaFin.split('T')[0] // Formatear la fecha a YYYY-MM-DD
+      fechaSalida: fechaSalida.split('T')[0] // Formatear la fecha a YYYY-MM-DD
     };
+  
+    console.log('Parámetros enviados a la API:', params); // Verificar los parámetros enviados
     return this.http.get<any>(this.apiUrl, { params });
   }
 }

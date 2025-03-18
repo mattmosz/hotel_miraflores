@@ -13,7 +13,7 @@ export class ReservaPage implements OnInit {
   habitacionId?: number; // Declarar la propiedad como opcional
   habitacion: any; // Propiedad para almacenar los detalles de la habitación
   fechaInicio: string = new Date().toISOString();
-  fechaFin: string = new Date().toISOString();
+  fechaSalida: string = new Date().toISOString();
 
   constructor(
     private navParams: NavParams,
@@ -37,11 +37,11 @@ export class ReservaPage implements OnInit {
   }
 
   comprobarDisponibilidad() {
-    if (this.habitacionId && this.fechaInicio && this.fechaFin) {
+    if (this.habitacionId && this.fechaInicio && this.fechaSalida) {
       const fechaInicioFormatted = this.fechaInicio.split('T')[0]; // Formatear la fecha a YYYY-MM-DD
-      const fechaFinFormatted = this.fechaFin.split('T')[0]; // Formatear la fecha a YYYY-MM-DD
-
-      this.reservasService.comprobarDisponibilidad(this.habitacionId, fechaInicioFormatted, fechaFinFormatted).subscribe(response => {
+      const fechaSalidaFormatted = this.fechaSalida.split('T')[0]; // Formatear la fecha a YYYY-MM-DD
+  
+      this.reservasService.comprobarDisponibilidad(this.habitacionId, fechaInicioFormatted, fechaSalidaFormatted).subscribe(response => {
         console.log(fechaInicioFormatted);
         console.log('Respuesta de la API:', response); // Agregar un console.log para verificar la respuesta de la API
         if (response && response.disponible !== undefined) {
