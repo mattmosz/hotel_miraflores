@@ -10,26 +10,25 @@ import { ReservasService } from '../servicio/reservas.service';
   standalone: false
 })
 export class ReservaPage implements OnInit {
-  habitacionId?: number; // Declarar la propiedad como opcional
-  habitacion: any; // Propiedad para almacenar los detalles de la habitación
+  habitacionId?: number;
+  habitacion: any;
   fechaInicio: string = new Date().toISOString();
   fechaSalida: string = new Date().toISOString();
+  habitacionDisponible: boolean = false; // Nueva variable para controlar la visibilidad del botón
 
   constructor(
     private navParams: NavParams,
     private modalController: ModalController,
-    private habitacionesService: HabitacionesService, // Inyectar el servicio de habitaciones
-    private reservasService: ReservasService // Inyectar el servicio de reservas
+    private habitacionesService: HabitacionesService,
+    private reservasService: ReservasService
   ) { }
 
   ngOnInit() {
     this.habitacionId = this.navParams.get('habitacionId');
-    console.log('Habitación ID:', this.habitacionId); // Agregar un console.log para verificar el ID
 
     if (this.habitacionId) {
       this.habitacionesService.getHabitacion(this.habitacionId).subscribe(habitacion => {
         this.habitacion = habitacion;
-        console.log('Detalles de la habitación:', this.habitacion); // Verificar los detalles de la habitación
       }, error => {
         console.error('Error al obtener los detalles de la habitación:', error);
       });
@@ -38,19 +37,26 @@ export class ReservaPage implements OnInit {
 
   comprobarDisponibilidad() {
     if (this.habitacionId && this.fechaInicio && this.fechaSalida) {
-      const fechaInicioFormatted = this.fechaInicio.split('T')[0]; // Formatear la fecha a YYYY-MM-DD
-      const fechaSalidaFormatted = this.fechaSalida.split('T')[0]; // Formatear la fecha a YYYY-MM-DD
-  
+      const fechaInicioFormatted = this.fechaInicio.split('T')[0];
+      const fechaSalidaFormatted = this.fechaSalida.split('T')[0];
+
       this.reservasService.comprobarDisponibilidad(this.habitacionId, fechaInicioFormatted, fechaSalidaFormatted).subscribe(response => {
-        console.log(fechaInicioFormatted);
-        console.log('Respuesta de la API:', response); // Agregar un console.log para verificar la respuesta de la API
         if (response && response.disponible !== undefined) {
+          this.habitacionDisponible = response.disponible; // Actualizar la visibilidad del botón
           if (response.disponible) {
-            console.log('La habitación está disponible.');
-            // Aquí puedes agregar lógica adicional, como mostrar un mensaje al usuario
+            const toast = document.createElement('ion-toast');
+            toast.message = '¡La habitación está disponible para las fechas seleccionadas!';
+            toast.duration = 2000;
+            toast.color = 'success';
+            document.body.appendChild(toast);
+            toast.present();
           } else {
-            console.log('La habitación no está disponible.');
-            // Aquí puedes agregar lógica adicional, como mostrar un mensaje al usuario
+            const toast = document.createElement('ion-toast');
+            toast.message = 'La habitación no está disponible para las fechas seleccionadas.';
+            toast.duration = 2000;
+            toast.color = 'danger';
+            document.body.appendChild(toast);
+            toast.present();
           }
         } else {
           console.error('Respuesta de la API no válida:', response);
@@ -65,5 +71,9 @@ export class ReservaPage implements OnInit {
 
   closeModal() {
     this.modalController.dismiss();
+  }
+
+  iniciarSesion() {
+    
   }
 }

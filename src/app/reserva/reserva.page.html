@@ -55,6 +55,9 @@
       <ion-item class="custom-item center-item">
         <ion-button expand="block" (click)="comprobarDisponibilidad()">Verificar disponibilidad</ion-button>
       </ion-item>
+      <ion-item class="custom-item center-item" *ngIf="habitacionDisponible">
+        <ion-button expand="block" color="primary" (click)="iniciarSesion()">Iniciar sesión</ion-button>
+      </ion-item>
     </ion-card-content>
   </ion-card>
 </ion-content>
