@@ -45,5 +45,68 @@ class ReservasModel
     
         return $result;
     }
+
+    public function insertar($fecha_inicio, $fecha_salida, $id_habitacion, $id_usuario)
+    {
+        // Calcular el número de días entre las fechas
+        $fechaInicio = new DateTime($fecha_inicio);
+        $fechaSalida = new DateTime($fecha_salida);
+        $dias = $fechaInicio->diff($fechaSalida)->days;
+
+        // Obtener el precio por noche de la habitación
+        $queryPrecio = "SELECT precio_noche FROM habitaciones WHERE id_habitacion = ?";
+        $stmtPrecio = $this->conn->prepare($queryPrecio);
+
+        if (!$stmtPrecio) {
+            error_log("Error al preparar la consulta para obtener el precio: " . $this->conn->error);
+            return null;
+        }
+
+        $stmtPrecio->bind_param("i", $id_habitacion);
+        $stmtPrecio->execute();
+        $resultPrecio = $stmtPrecio->get_result();
+
+        if (!$resultPrecio || $resultPrecio->num_rows === 0) {
+            error_log("No se encontró el precio de la habitación.");
+            return null;
+        }
+
+        $habitacion = $resultPrecio->fetch_assoc();
+        $precio_noche = $habitacion['precio_noche'];
+
+        // Calcular el total de la reserva
+        $total_reserva = $precio_noche * $dias;
+
+        // Generar número de reserva
+        $numero_reserva = $this->generarNumeroReserva();
+
+        // Insertar la reserva
+        $query = "INSERT INTO reservas (total_reserva, numero_reserva, fecha_inicio, fecha_salida, id_habitacion, id_usuario) 
+                  VALUES (?, ?, ?, ?, ?, ?)";
+        $stmt = $this->conn->prepare($query);
+
+        if (!$stmt) {
+            error_log("Error al preparar la consulta para insertar la reserva: " . $this->conn->error);
+            return null;
+        }
+
+        $stmt->bind_param("dsssii", $total_reserva, $numero_reserva, $fecha_inicio, $fecha_salida, $id_habitacion, $id_usuario);
+
+        if ($stmt->execute()) {
+            return [
+                'id_reserva' => $this->conn->insert_id,
+                'numero_reserva' => $numero_reserva,
+                'total_reserva' => $total_reserva
+            ];
+        } else {
+            error_log("Error al ejecutar la consulta para insertar la reserva: " . $stmt->error);
+            return null;
+        }
+    }
+
+    private function generarNumeroReserva()
+    {
+        return substr(str_shuffle("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"), 0, 10);
+    }
 }
 ?>

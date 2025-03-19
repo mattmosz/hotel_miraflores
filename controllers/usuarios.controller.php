@@ -45,6 +45,24 @@ switch ($_GET['op']) {
         echo json_encode($datos);
         break;
 
+    case 'uno':
+        header('Content-Type: application/json');
+        $id_usuario = $_GET['id_usuario'] ?? null;
+        
+        if (!$id_usuario) {
+            echo json_encode(['error' => 'Faltan parámetros']);
+            break;
+        }
+        
+        $datos = $usuarios->uno($id_usuario);
+        
+        if ($datos) {
+            echo json_encode($datos);
+        } else {
+            echo json_encode(['error' => 'Usuario no encontrado']);
+        }
+        break;
+
     default:
         header('Content-Type: application/json');
         echo json_encode(array("error" => "Invalid operation"));

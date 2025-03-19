@@ -45,6 +45,31 @@ switch ($_GET['op']) {
         $disponible = $datos->num_rows === 0;
         echo json_encode(['disponible' => $disponible]);
         break;
+    
+    case 'insertar':
+        header('Content-Type: application/json');
+
+        // Obtener los datos enviados desde el cliente
+        $fecha_inicio = $_POST['fecha_inicio'] ?? null;
+        $fecha_salida = $_POST['fecha_salida'] ?? null;
+        $id_habitacion = $_POST['id_habitacion'] ?? null;
+        $id_usuario = $_POST['id_usuario'] ?? null;
+
+        // Validar que todos los parámetros estén presentes
+        if (!$fecha_inicio || !$fecha_salida || !$id_habitacion || !$id_usuario) {
+            echo json_encode(['error' => 'Faltan parámetros']);
+            break;
+        }
+
+        // Insertar la reserva
+        $resultado = $reservas->insertar($fecha_inicio, $fecha_salida, $id_habitacion, $id_usuario);
+
+        if ($resultado) {
+            echo json_encode(['success' => true, 'data' => $resultado]);
+        } else {
+            echo json_encode(['success' => false, 'error' => 'No se pudo insertar la reserva']);
+        }
+        break;
 
     default:
         header('Content-Type: application/json');
