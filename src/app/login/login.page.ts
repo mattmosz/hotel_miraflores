@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UsuariosService } from '../servicio/usuarios.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +14,7 @@ export class LoginPage implements OnInit {
 
   correo_usuario: string = '';
   clave_usuario: string = '';
-  constructor(private usuariosService: UsuariosService) { }
+  constructor(private usuariosService: UsuariosService, private router: Router) { }
 
   ngOnInit() {
   }
@@ -23,6 +24,8 @@ export class LoginPage implements OnInit {
       this.usuariosService.login(this.correo_usuario, this.clave_usuario).subscribe(response => {
         if (response && response.id_usuario) {
           console.log('¡Inicio de sesión correcto!', response);
+          localStorage.setItem('idUsuario', response.id_usuario);
+          this.router.navigate(['/checkout']);
         } else {
           console.error('¡Inicio de sesión incorrecto!', response);
         }
@@ -35,6 +38,11 @@ export class LoginPage implements OnInit {
   register(){
   }
 
-  cancel(){}
+
+  cancel() {
+      this.router.navigate(['/home']);
+  }
 
 }
+
+

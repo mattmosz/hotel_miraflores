@@ -18,4 +18,9 @@ export class UsuariosService {
 
     return this.http.get<any>(this.apiUrl, { params });
   }
+
+  getUsuario(idUsuario: number): Observable<any> {
+    const params = { op: 'uno', id_usuario: idUsuario.toString() };
+    return this.http.get<any>(this.apiUrl, { params });
+  }
 }

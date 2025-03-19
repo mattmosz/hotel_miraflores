@@ -23,9 +23,10 @@ export class HabitacionesPage implements OnInit {
   async openReservaModal(habitacionId: number) {
     this.habitacionesService.getHabitacion(habitacionId).subscribe(habitacion => {
       if (habitacion) {
+        localStorage.setItem('idHabitacion', habitacion.id_habitacion);
         const modal = this.modalController.create({
           component: ReservaPage,
-          componentProps: { habitacionId: habitacion.id_habitacion } // Usar el nombre correcto del atributo
+          componentProps: { habitacionId: habitacion.id_habitacion }
         });
         modal.then(m => m.present());
       } else {

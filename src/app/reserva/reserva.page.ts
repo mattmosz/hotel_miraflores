@@ -82,7 +82,8 @@ export class ReservaPage implements OnInit {
     };
 
     this.modalController.dismiss().then(() => {
-      window.localStorage.setItem('datosReserva', JSON.stringify(datosReserva));
+      localStorage.setItem('fechaInicio', datosReserva.fechaInicio);
+      localStorage.setItem('fechaSalida', datosReserva.fechaSalida);
       window.location.href = '/login';
     });
     

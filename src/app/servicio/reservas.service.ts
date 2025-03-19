@@ -22,4 +22,9 @@ export class ReservasService {
     console.log('Parámetros enviados a la API:', params); // Verificar los parámetros enviados
     return this.http.get<any>(this.apiUrl, { params });
   }
+
+  insertarReserva(reserva: any): Observable<any> {
+    return this.http.post<any>(this.apiUrl, { op: 'insertar', ...reserva });
+  }
+
 }
