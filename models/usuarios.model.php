@@ -49,5 +49,25 @@ class UsuariosModel
         }
     }
 
+    public function uno($id_usuario) {
+        $query = "SELECT nombre_usuario, apellido_usuario FROM usuarios WHERE id_usuario = ?";
+        $stmt = $this->conn->prepare($query);
+    
+        if (!$stmt) {
+            error_log("Error al preparar la consulta: " . $this->conn->error);
+            return null;
+        }
+    
+        $stmt->bind_param("i", $id_usuario);
+        $stmt->execute();
+        $result = $stmt->get_result();
+    
+        if ($result->num_rows > 0) {
+            return $result->fetch_assoc(); 
+        } else {
+            return null; 
+        }
+    }
+
 }
 ?>
