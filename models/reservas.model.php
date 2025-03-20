@@ -80,9 +80,9 @@ class ReservasModel
         // Generar número de reserva
         $numero_reserva = $this->generarNumeroReserva();
 
-        // Insertar la reserva
-        $query = "INSERT INTO reservas (total_reserva, numero_reserva, fecha_inicio, fecha_salida, id_habitacion, id_usuario) 
-                  VALUES (?, ?, ?, ?, ?, ?)";
+        // Insertar la reserva con estado_reserva = 1
+        $query = "INSERT INTO reservas (total_reserva, numero_reserva, fecha_inicio, fecha_salida, id_habitacion, id_usuario, estado_reserva) 
+                  VALUES (?, ?, ?, ?, ?, ?, ?)";
         $stmt = $this->conn->prepare($query);
 
         if (!$stmt) {
@@ -90,13 +90,15 @@ class ReservasModel
             return null;
         }
 
-        $stmt->bind_param("dsssii", $total_reserva, $numero_reserva, $fecha_inicio, $fecha_salida, $id_habitacion, $id_usuario);
+        $estado_reserva = 1; // Estado predeterminado
+        $stmt->bind_param("dsssiii", $total_reserva, $numero_reserva, $fecha_inicio, $fecha_salida, $id_habitacion, $id_usuario, $estado_reserva);
 
         if ($stmt->execute()) {
             return [
                 'id_reserva' => $this->conn->insert_id,
                 'numero_reserva' => $numero_reserva,
-                'total_reserva' => $total_reserva
+                'total_reserva' => $total_reserva,
+                'estado_reserva' => $estado_reserva
             ];
         } else {
             error_log("Error al ejecutar la consulta para insertar la reserva: " . $stmt->error);
