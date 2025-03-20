@@ -10,17 +10,17 @@ import { UsuariosService } from '../servicio/usuarios.service';
   standalone: false
 })
 export class CheckoutPage implements OnInit {
-  idHabitacion: number = 0; // ID de la habitación seleccionada
-  idUsuario: number = 0; // ID del usuario que inició sesión
-  fechaInicio: string = ''; // Fecha de inicio de la reserva
-  fechaSalida: string = ''; // Fecha de salida de la reserva
-  totalReserva: number = 0; // Total calculado de la reserva
-  numeroReserva: string = ''; // Código de reserva generado
-  estiloHabitacion: string = ''; // Estilo de la habitación
-  fotoHabitacion: string = ''; // Fotografía de la habitación
-  nombreUsuario: string = ''; // Nombre del usuario
-  apellidoUsuario: string = ''; // Apellido del usuario
-  precioNoche: number = 0; // Precio por noche de la habitación
+  idHabitacion: number = 0; 
+  idUsuario: number = 0; 
+  fechaInicio: string = ''; 
+  fechaSalida: string = ''; 
+  totalReserva: number = 0; 
+  numeroReserva: string = ''; 
+  estiloHabitacion: string = ''; 
+  fotoHabitacion: string = ''; 
+  nombreUsuario: string = ''; 
+  apellidoUsuario: string = ''; 
+  precioNoche: number = 0; 
 
   constructor(
     private reservasService: ReservasService,
