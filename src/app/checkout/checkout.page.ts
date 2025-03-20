@@ -98,7 +98,7 @@ export class CheckoutPage implements OnInit {
     this.reservasService.insertarReserva(reserva).subscribe(response => {
       if (response.success) {
         console.log('Reserva registrada con éxito:', response);
-        // Aquí puedes redirigir al usuario o mostrar un mensaje de éxito
+        
       } else {
         console.error('Error al registrar la reserva:', response.error);
       }
