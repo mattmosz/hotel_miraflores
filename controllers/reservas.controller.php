@@ -10,60 +10,64 @@ if ($method == "OPTIONS") {
     die();
 }
 
-require_once __DIR__ . '/../models/reservas.model.php'; 
-error_reporting(0);
+require_once __DIR__ . '/../models/reservas.model.php';
+error_reporting(E_ALL);
 $reservas = new ReservasModel();
-
-switch ($_GET['op']) {
-    case 'todos': 
+$op = $_GET['op'] ?? $_POST['op'] ?? null; // Obtener 'op' desde GET o POST
+switch ($op) {
+    case 'todos':
         $datos = $reservas->todos();
         header('Content-Type: application/json');
         echo json_encode($datos);
         break;
-    
+
     case 'disponibilidad':
         header('Content-Type: application/json');
         $fecha_inicio = $_GET['fechaInicio'] ?? null;
         $fecha_salida = $_GET['fechaSalida'] ?? null; // Cambiado a $fecha_salida
         $id_habitacion = $_GET['habitacionId'] ?? null;
-        
+
         // Log para verificar los parámetros recibidos
         error_log("Parámetros recibidos: fechaInicio=$fecha_inicio, fechaSalida=$fecha_salida, habitacionId=$id_habitacion");
-        
+
         if (!$fecha_inicio || !$fecha_salida || !$id_habitacion) { // Cambiado a $fecha_salida
             echo json_encode(['error' => 'Faltan parámetros']);
             break;
         }
-        
+
         $datos = $reservas->disponibilidad($fecha_inicio, $fecha_salida, $id_habitacion); // Cambiado a $fecha_salida
         if ($datos === null) {
             error_log("Error: La consulta SQL devolvió null.");
             echo json_encode(['error' => 'Error en la consulta SQL']);
             break;
         }
-        
+
         $disponible = $datos->num_rows === 0;
         echo json_encode(['disponible' => $disponible]);
         break;
-    
+
     case 'insertar':
         header('Content-Type: application/json');
-
+        error_log("📩 Datos recibidos en PHP: " . json_encode($_POST));
+        
         // Obtener los datos enviados desde el cliente
         $fecha_inicio = $_POST['fecha_inicio'] ?? null;
         $fecha_salida = $_POST['fecha_salida'] ?? null;
         $id_habitacion = $_POST['id_habitacion'] ?? null;
         $id_usuario = $_POST['id_usuario'] ?? null;
-
+        $total_reserva = $_POST['total_reserva'] ?? null;
+        $numero_reserva = $_POST['numero_reserva'] ?? null;
+        $estado_reserva = $_POST['estado_reserva'] ?? null;
+        
         // Validar que todos los parámetros estén presentes
-        if (!$fecha_inicio || !$fecha_salida || !$id_habitacion || !$id_usuario) {
+        if (!$fecha_inicio || !$fecha_salida || !$id_habitacion || !$id_usuario || !$total_reserva || !$numero_reserva) {
             echo json_encode(['error' => 'Faltan parámetros']);
             break;
         }
-
+        
         // Insertar la reserva
-        $resultado = $reservas->insertar($fecha_inicio, $fecha_salida, $id_habitacion, $id_usuario);
-
+        $resultado = $reservas->insertar($fecha_inicio, $fecha_salida, $id_habitacion, $id_usuario, $total_reserva, $numero_reserva, $estado_reserva);
+        
         if ($resultado) {
             echo json_encode(['success' => true, 'data' => $resultado]);
         } else {
@@ -76,4 +80,3 @@ switch ($_GET['op']) {
         echo json_encode(array("error" => "Invalid operation"));
         break;
 }
-?>
