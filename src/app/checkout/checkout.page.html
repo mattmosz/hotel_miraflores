@@ -14,11 +14,10 @@
       <p><strong>Fecha de salida:</strong> {{ fechaSalida }}</p>
       <p><strong>Estilo de habitación:</strong> {{ estiloHabitacion }}</p>
       <img [src]="'assets/imgs/habitaciones/' + fotoHabitacion" alt="Foto de la habitación" style="width: 100%; height: auto; margin-top: 10px;">
-      <p><strong>Precio por noche:</strong> {{ precioNoche | currency }}</p>
       <p><strong>Total:</strong> {{ totalReserva | currency }}</p>
       <p><strong>Código de reserva:</strong> {{ numeroReserva }}</p>
       <p><strong>Nombre del usuario:</strong> {{ nombreUsuario }} {{ apellidoUsuario }}</p>
-      <ion-button expand="block" (click)="confirmarReserva()">Confirmar Reserva</ion-button>
+      <ion-button expand="block" (click)="confirmarReserva()">Proceder a Pagar</ion-button>
     </ion-card-content>
   </ion-card>
 </ion-content>
