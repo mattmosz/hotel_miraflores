@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -24,7 +24,26 @@ export class ReservasService {
   }
 
   insertarReserva(reserva: any): Observable<any> {
-    return this.http.post<any>(this.apiUrl, { op: 'insertar', ...reserva });
-  }
+    const params = { op: 'insertar' }; // Enviamos 'op' en los parámetros de la URL
+    
+    const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
 
+    // Convertir el objeto a una cadena de parámetros
+    const body = new URLSearchParams();
+    body.set('op', 'insertar');
+    body.set('fecha_inicio', reserva.fecha_inicio);
+    body.set('fecha_salida', reserva.fecha_salida);
+    body.set('id_habitacion', reserva.id_habitacion.toString());
+    body.set('id_usuario', reserva.id_usuario.toString());
+    body.set('total_reserva', reserva.total_reserva.toString());
+    body.set('numero_reserva', reserva.numero_reserva);
+
+    console.log('📩 Datos enviados al backend:', body.toString());
+
+    return this.http.post<any>(this.apiUrl, body.toString(), { headers });
+  }
+  
 }
+  
+
+

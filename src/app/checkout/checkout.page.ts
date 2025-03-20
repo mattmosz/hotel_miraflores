@@ -68,13 +68,33 @@ export class CheckoutPage implements OnInit {
   }
 
   confirmarReserva() {
+    // Formatear las fechas para que sean solo de tipo "YYYY-MM-DD"
+    const fechaInicioFormatted = this.fechaInicio.split('T')[0];
+    const fechaSalidaFormatted = this.fechaSalida.split('T')[0];
+  
+    // Calcular el total de la reserva
+    const fechaInicio = new Date(this.fechaInicio);
+    const fechaSalida = new Date(this.fechaSalida);
+    const dias = (fechaSalida.getTime() - fechaInicio.getTime()) / (1000 * 60 * 60 * 24);
+    const totalReserva = parseFloat((dias * this.precioNoche).toFixed(2)); // Formatear a dos decimales
+  
+    // Generar el número de reserva
+    const caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    const numeroReserva = Array.from({ length: 10 }, () => caracteres.charAt(Math.floor(Math.random() * caracteres.length))).join('');
+  
+    // Crear el objeto de reserva con el campo estado_reserva
     const reserva = {
-      fecha_inicio: this.fechaInicio,
-      fecha_salida: this.fechaSalida,
+      fecha_inicio: fechaInicioFormatted,
+      fecha_salida: fechaSalidaFormatted,
       id_habitacion: this.idHabitacion,
-      id_usuario: this.idUsuario
+      id_usuario: this.idUsuario,
+      total_reserva: totalReserva,
+      numero_reserva: numeroReserva,
+      estado_reserva: 1 // Valor predeterminado
     };
-
+  
+    console.log('Datos enviados al servicio:', reserva); // Verificar los datos enviados
+  
     this.reservasService.insertarReserva(reserva).subscribe(response => {
       if (response.success) {
         console.log('Reserva registrada con éxito:', response);
