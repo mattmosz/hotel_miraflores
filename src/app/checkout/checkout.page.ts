@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ReservasService } from '../servicio/reservas.service';
 import { HabitacionesService } from '../servicio/habitaciones.service';
 import { UsuariosService } from '../servicio/usuarios.service';
+import { loadStripe } from '@stripe/stripe-js';
 
 @Component({
   selector: 'app-checkout',
@@ -98,7 +99,9 @@ export class CheckoutPage implements OnInit {
     this.reservasService.insertarReserva(reserva).subscribe(response => {
       if (response.success) {
         console.log('Reserva registrada con éxito:', response);
-        
+        const enlacePago = 'https://buy.stripe.com/test_6oE7uUg2tbtcaGs7st'; // Tu enlace directo de Stripe
+        window.open(enlacePago, '_blank'); // Abrir el enlace de pago en una pestaña nueva
+        window.location.href = '/home'; // Redirigir al home page
       } else {
         console.error('Error al registrar la reserva:', response.error);
       }
@@ -106,4 +109,5 @@ export class CheckoutPage implements OnInit {
       console.error('Error en la solicitud de registro de reserva:', error);
     });
   }
+
 }
