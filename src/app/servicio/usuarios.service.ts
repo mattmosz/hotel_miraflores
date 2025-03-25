@@ -23,4 +23,12 @@ export class UsuariosService {
     const params = { op: 'uno', id_usuario: idUsuario.toString() };
     return this.http.get<any>(this.apiUrl, { params });
   }
+
+  insertarUsuario(usuario: any): Observable<any> {
+    const body = { op: 'insertar', ...usuario }; // Agregar 'op' en el JSON
+
+    return this.http.post<any>(this.apiUrl, body, {
+      headers: { 'Content-Type': 'application/json' }
+    });
+  }
 }
