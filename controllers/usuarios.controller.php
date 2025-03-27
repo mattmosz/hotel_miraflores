@@ -96,6 +96,30 @@ switch ($op) {
         }
         break;
 
+    case 'loginAdmin':
+        header('Content-Type: application/json');
+
+        $correo_usuario = $_GET['correo_usuario'] ?? null;
+        $clave_usuario = $_GET['clave_usuario'] ?? null;
+
+        // Depurar los valores recibidos
+        error_log("Correo recibido: $correo_usuario");
+        error_log("Clave recibida: $clave_usuario");
+
+        if (!$correo_usuario || !$clave_usuario) {
+            echo json_encode(['error' => 'Faltan parámetros']);
+            break;
+        }
+
+        $datos = $usuarios->loginAdmin($correo_usuario, $clave_usuario);
+        if ($datos === null) {
+            echo json_encode(['error' => 'Credenciales incorrectas o no tienes permisos de administrador']);
+            break;
+        }
+
+        echo json_encode(['success' => true, 'admin_id' => $datos['id_usuario'], 'nombre' => $datos['nombre_usuario']]);
+        break;
+
     default:
         header('Content-Type: application/json');
         echo json_encode(['error' => 'Operación no válida']);

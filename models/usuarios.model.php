@@ -93,4 +93,36 @@ class UsuariosModel
             return false;
         }
     }
+
+    public function loginAdmin($correo_usuario, $clave_usuario)
+    {
+        $query = "SELECT * FROM usuarios WHERE correo_usuario = ? AND rol_usuario = 1";
+        $stmt = $this->conn->prepare($query);
+
+        if (!$stmt) {
+            error_log("Error al preparar la consulta: " . $this->conn->error);
+            return null;
+        }
+
+        $stmt->bind_param("s", $correo_usuario);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if (!$result || $result->num_rows === 0) {
+            error_log("Usuario no encontrado o no es administrador.");
+            return null;
+        }
+
+        $usuario = $result->fetch_assoc();
+
+        // Verificar la contraseña ingresada con el hash almacenado
+        if (password_verify($clave_usuario, $usuario['clave_usuario'])) {
+            // Contraseña correcta, devolver los datos del usuario
+            return $usuario;
+        } else {
+            // Contraseña incorrecta
+            error_log("Contraseña incorrecta para el usuario: $correo_usuario");
+            return null;
+        }
+    }
 }
