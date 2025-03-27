@@ -25,10 +25,19 @@ export class UsuariosService {
   }
 
   insertarUsuario(usuario: any): Observable<any> {
-    const body = { op: 'insertar', ...usuario }; // Agregar 'op' en el JSON
+    const body = { op: 'insertar', ...usuario };
 
     return this.http.post<any>(this.apiUrl, body, {
       headers: { 'Content-Type': 'application/json' }
     });
+  }
+
+  loginAdmin(correo_usuario: string, clave_usuario: string): Observable<any> {
+    const params = new HttpParams()
+      .set('op', 'loginAdmin')
+      .set('correo_usuario', correo_usuario)
+      .set('clave_usuario', clave_usuario);
+  
+    return this.http.get<any>(this.apiUrl, { params });
   }
 }
