@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ReservasService } from '../servicio/reservas.service';
 import { Router } from '@angular/router';
 import { UsuariosService } from '../servicio/usuarios.service';
+import { HabitacionesService } from '../servicio/habitaciones.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -12,11 +13,13 @@ import { UsuariosService } from '../servicio/usuarios.service';
 export class DashboardPage implements OnInit {
   totalClientes: number = 0; // Variable para almacenar el total de clientes
   totalReservas: number = 0; // Variable para almacenar el total de reservas
-  constructor(private reservasService: ReservasService, private router: Router, private usuariosService : UsuariosService) {}
+  totalHabitaciones: number = 0; // Variable para almacenar el total de habitaciones
+  constructor(private reservasService: ReservasService, private router: Router, private usuariosService : UsuariosService, private habitacionesService : HabitacionesService) {}
 
   ngOnInit() {
     this.obtenerTotalReservas(); // Llamar a la función al iniciar la página
     this.obtenerTotalClientes(); // Llamar a la función al iniciar la página
+    this.obtenerTotalHabitaciones(); // Llamar a la función al iniciar la página
   }
 
   obtenerTotalReservas() {
@@ -39,6 +42,18 @@ export class DashboardPage implements OnInit {
       },
       (error) => {
         console.error('Error al obtener el total de clientes:', error);
+      }
+    );
+  }
+
+  obtenerTotalHabitaciones() {
+    this.habitacionesService.getTotalHabitaciones().subscribe(
+      (response: any) => {
+        this.totalHabitaciones = response.total || 0; // Asignar el total de habitaciones
+        console.log('Total de habitaciones:', this.totalHabitaciones);
+      },
+      (error) => {
+        console.error('Error al obtener el total de habitaciones:', error);
       }
     );
   }
