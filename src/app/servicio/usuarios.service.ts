@@ -40,4 +40,9 @@ export class UsuariosService {
   
     return this.http.get<any>(this.apiUrl, { params });
   }
+
+  getTotalClientes(): Observable<any> {
+    const params = { op: 'totalClientes' };
+    return this.http.get<any>(this.apiUrl, { params });
+  }
 }
