@@ -110,5 +110,13 @@ class ReservasModel
     {
         return substr(str_shuffle("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"), 0, 10);
     }
+
+    public function getTotalReservas()
+    {
+        $query = "SELECT COUNT(*) as total FROM reservas WHERE estado_reserva = 1";
+        $result = mysqli_query($this->conn, $query);
+        $row = mysqli_fetch_assoc($result);
+        return $row['total'];
+    }
 }
 ?>

@@ -75,6 +75,13 @@ switch ($op) {
         }
         break;
 
+    case 'totalReservas':
+        header('Content-Type: application/json');
+        $total = $reservas->getTotalReservas();
+        echo json_encode(['success' => true, 'total_reservas' => $total]);
+        break;
+
+
     default:
         header('Content-Type: application/json');
         echo json_encode(array("error" => "Invalid operation"));
