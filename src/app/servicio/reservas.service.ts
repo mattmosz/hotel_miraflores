@@ -42,6 +42,11 @@ export class ReservasService {
 
     return this.http.post<any>(this.apiUrl, body.toString(), { headers });
   }
+
+  getTotalReservas(): Observable<any> {
+    const params = { op: 'totalReservas' };
+    return this.http.get<any>(this.apiUrl, { params });
+  }
   
 }
   
