@@ -34,5 +34,17 @@ switch($_GET['op']){
         header('Content-Type: application/json');
         echo json_encode($uno); 
         break;
+
+    case 'totalHabitaciones':
+        $datos = array();
+        $datos = $habitaciones->getTotalHabitaciones();
+        header('Content-Type: application/json');
+        echo json_encode(array('success' => true, 'total' => $datos));
+        break;
+
+    default:
+        header('Content-Type: application/json');
+        echo json_encode(array('success' => false, 'message' => 'Operación no válida'));
+        break;
 }
 ?>
