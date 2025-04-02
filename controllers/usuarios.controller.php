@@ -120,6 +120,16 @@ switch ($op) {
         echo json_encode(['success' => true, 'admin_id' => $datos['id_usuario'], 'nombre' => $datos['nombre_usuario']]);
         break;
 
+    case 'totalClientes':
+        header('Content-Type: application/json');
+        $totalClientes = $usuarios->getTotalClientes();
+        if ($totalClientes === null) {
+            echo json_encode(['error' => 'Error al obtener el total de clientes']);
+            break;
+        }
+        echo json_encode(['total' => $totalClientes]);
+        break;
+
     default:
         header('Content-Type: application/json');
         echo json_encode(['error' => 'Operación no válida']);
