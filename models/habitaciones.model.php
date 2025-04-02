@@ -20,5 +20,16 @@ class HabitacionesModel {
         $result = mysqli_query($this->conn, $query);
         return $result;
     }
+
+    public function getTotalHabitaciones() {
+        $query = "SELECT COUNT(*) as total FROM habitaciones";
+        $result = mysqli_query($this->conn, $query);
+        if ($result) {
+            $row = mysqli_fetch_assoc($result);
+            return $row['total'];
+        } else {
+            return 0; // En caso de error, devolver 0
+        }
+    }
 }
 ?>
