@@ -125,4 +125,11 @@ class UsuariosModel
             return null;
         }
     }
+
+    public function getTotalClientes(){
+        $query = "SELECT COUNT(*) as total FROM usuarios WHERE rol_usuario = 2";
+        $result = mysqli_query($this->conn, $query);
+        $row = mysqli_fetch_assoc($result);
+        return $row['total'];
+    }
 }
