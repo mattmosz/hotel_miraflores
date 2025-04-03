@@ -11,11 +11,14 @@ class ReservasModel
         $this->conn = Conexion::conectar();
     }
 
-    public function todos()
-    {
+    public function getTodasReservas() {
         $query = "SELECT * FROM reservas";
         $result = mysqli_query($this->conn, $query);
-        return $result;
+        $reservas = [];
+        while ($row = mysqli_fetch_assoc($result)) {
+            $reservas[] = $row;
+        }
+        return $reservas; 
     }
 
     public function uno($id)
@@ -117,6 +120,16 @@ class ReservasModel
         $result = mysqli_query($this->conn, $query);
         $row = mysqli_fetch_assoc($result);
         return $row['total'];
+    }
+
+    public function getReservasActivas() {
+        $query = "SELECT * FROM reservas WHERE estado_reserva = 1";
+        $result = mysqli_query($this->conn, $query);
+        $reservas = [];
+        while ($row = mysqli_fetch_assoc($result)) {
+            $reservas[] = $row;
+        }
+        return $reservas; 
     }
 }
 ?>
