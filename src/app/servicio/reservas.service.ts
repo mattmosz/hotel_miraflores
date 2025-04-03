@@ -47,6 +47,16 @@ export class ReservasService {
     const params = { op: 'totalReservas' };
     return this.http.get<any>(this.apiUrl, { params });
   }
+
+  reservasActivas(): Observable<any> {
+    const params = { op: 'reservasActivas' };
+    return this.http.get<any[]>(this.apiUrl, { params }); 
+  }
+  
+  todos(): Observable<any> {
+    const params = { op: 'todos' };
+    return this.http.get<any[]>(this.apiUrl, { params }); 
+  }
   
 }
   
