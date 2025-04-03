@@ -16,9 +16,9 @@ $reservas = new ReservasModel();
 $op = $_GET['op'] ?? $_POST['op'] ?? null; // Obtener 'op' desde GET o POST
 switch ($op) {
     case 'todos':
-        $datos = $reservas->todos();
         header('Content-Type: application/json');
-        echo json_encode($datos);
+        $todasReservas = $reservas->getTodasReservas();
+        echo json_encode($todasReservas); // Asegúrate de devolver un array
         break;
 
     case 'disponibilidad':
@@ -79,6 +79,12 @@ switch ($op) {
         header('Content-Type: application/json');
         $total = $reservas->getTotalReservas();
         echo json_encode(['success' => true, 'total_reservas' => $total]);
+        break;
+
+    case 'reservasActivas':
+        header('Content-Type: application/json');
+        $reservasActivas = $reservas->getReservasActivas();
+        echo json_encode($reservasActivas); 
         break;
 
 
