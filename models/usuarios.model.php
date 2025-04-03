@@ -13,9 +13,13 @@ class UsuariosModel
 
     public function todos()
     {
-        $query = "SELECT * FROM usuarios";
+        $query = "SELECT * FROM usuarios WHERE rol_usuario = 2";
         $result = mysqli_query($this->conn, $query);
-        return $result;
+        $usuarios = [];
+        while ($row = mysqli_fetch_assoc($result)) {
+            $usuarios[] = $row;
+        }
+        return $usuarios;
     }
 
     public function login($correo_usuario, $clave_usuario)
