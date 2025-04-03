@@ -1,4 +1,4 @@
-<ion-menu content-id="reservas-admin-content">
+<ion-menu content-id="clientes-content">
   <ion-header>
     <ion-toolbar color="white">
       <ion-title>Menú</ion-title>
@@ -31,30 +31,36 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Reservas</ion-title>
+    <ion-title>Clientes</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" id="reservas-admin-content">
-  <!-- Selector para filtrar reservas -->
-  <ion-segment (ionChange)="cambiarFiltro($event)" value="activas">
-    <ion-segment-button value="activas">
-      <ion-label>Activas</ion-label>
-    </ion-segment-button>
-    <ion-segment-button value="historial">
-      <ion-label>Historial</ion-label>
-    </ion-segment-button>
-  </ion-segment>
+<ion-content [fullscreen]="true" id="clientes-content">
+  <!-- Buscador -->
+  <ion-searchbar 
+    placeholder="Buscar clientes..." 
+    [(ngModel)]="searchTerm" 
+    (ionInput)="buscarUsuarios($event)">
+  </ion-searchbar>
 
-  <!-- Lista de reservas -->
+  <!-- Lista de usuarios -->
   <ion-list>
-    <ion-item *ngFor="let reserva of reservas">
-      <ion-label>
-        <h2>Reserva #{{ reserva.numero_reserva }}</h2>
-        <p>Fecha Inicio: {{ reserva.fecha_inicio }}</p>
-        <p>Fecha Salida: {{ reserva.fecha_salida }}</p>
-        <p>Total: {{ reserva.total_reserva | currency }}</p>
-      </ion-label>
-    </ion-item>
+    <ion-item-sliding *ngFor="let usuario of usuariosFiltrados">
+      <ion-item>
+        <ion-label>
+          <h2>{{ usuario.nombre_usuario }} {{ usuario.apellido_usuario }}</h2>
+          <p>Correo: {{ usuario.correo_usuario }}</p>
+          <p>Teléfono: {{ usuario.telefono_usuario }}</p>
+        </ion-label>
+      </ion-item>
+      <ion-item-options side="end">
+        <ion-item-option color="primary" (click)="editarUsuario(usuario)">
+          Editar
+        </ion-item-option>
+        <ion-item-option color="danger" (click)="eliminarUsuario(usuario.id_usuario)">
+          Eliminar
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
   </ion-list>
 </ion-content>

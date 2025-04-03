@@ -33,6 +33,10 @@ const routes: Routes = [
   {
     path: 'reservas-admin',
     loadChildren: () => import('./reservas-admin/reservas-admin.module').then( m => m.ReservasAdminPageModule)
+  },
+  {
+    path: 'clientes',
+    loadChildren: () => import('./clientes/clientes.module').then( m => m.ClientesPageModule)
   }
 ];
 
