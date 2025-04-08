@@ -98,10 +98,10 @@ switch ($op) {
             break;
         }
         
-        $reservas = $reservasModel->getReservasPorFechas($fechaInicio, $fechaFin);
+        $reservasPorFecha = $reservas->getReservasPorFechas($fechaInicio, $fechaFin);
         
-        if ($reservas !== null) {
-            echo json_encode($reservas);
+        if ($reservasPorFecha !== null) {
+            echo json_encode($reservasPorFecha);
         } else {
             echo json_encode(['error' => 'No se encontraron reservas en el rango de fechas']);
         }
