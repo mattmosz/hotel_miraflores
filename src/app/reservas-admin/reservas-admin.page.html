@@ -52,11 +52,15 @@
   <!-- Reportes -->
   <ng-container *ngIf="filtro === 'reportes'">
     <ion-item>
-      <ion-label>Fecha Inicio</ion-label>
+      <ion-label>Desde</ion-label>
+    </ion-item>
+    <ion-item>
       <ion-datetime [(ngModel)]="fechaInicio" presentation="date"></ion-datetime>
     </ion-item>
     <ion-item>
-      <ion-label>Fecha Fin</ion-label>
+      <ion-label>Hasta</ion-label>
+    </ion-item>
+    <ion-item>
       <ion-datetime [(ngModel)]="fechaFin" presentation="date"></ion-datetime>
     </ion-item>
     <ion-button expand="block" (click)="buscarReservasPorFechas()">Buscar</ion-button>

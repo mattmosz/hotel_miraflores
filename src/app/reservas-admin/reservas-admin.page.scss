@@ -153,3 +153,12 @@ ion-segment {
   ion-segment-button:hover {
     --background: rgba(255, 255, 255, 0.2); /* Fondo al pasar el mouse */
   }
+
+  ion-datetime {
+    --background: #ffffff;
+    --ion-color-base: #ffffff;
+    --ion-text-color: #000000;
+    --ion-color-primary: #007bff;
+    --ion-color-step-850: #f0f0f0; // hover o fondo secundario
+  }
+  
