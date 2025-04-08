@@ -36,25 +36,49 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" id="reservas-admin-content">
-  <!-- Selector para filtrar reservas -->
-  <ion-segment (ionChange)="cambiarFiltro($event)" value="activas">
+  <!-- Segmento para elegir filtro -->
+  <ion-segment (ionChange)="cambiarFiltro($event)" [value]="filtro">
     <ion-segment-button value="activas">
       <ion-label>Activas</ion-label>
     </ion-segment-button>
     <ion-segment-button value="historial">
       <ion-label>Historial</ion-label>
     </ion-segment-button>
+    <ion-segment-button value="reportes">
+      <ion-label>Reportes</ion-label>
+    </ion-segment-button>
   </ion-segment>
 
-  <!-- Lista de reservas -->
-  <ion-list>
+  <!-- Reportes -->
+  <ng-container *ngIf="filtro === 'reportes'">
+    <ion-item>
+      <ion-label>Fecha Inicio</ion-label>
+      <ion-datetime [(ngModel)]="fechaInicio" presentation="date"></ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-label>Fecha Fin</ion-label>
+      <ion-datetime [(ngModel)]="fechaFin" presentation="date"></ion-datetime>
+    </ion-item>
+    <ion-button expand="block" (click)="buscarReservasPorFechas()">Buscar</ion-button>
+    <ion-button expand="block" color="success" (click)="generarPDF()">Generar PDF</ion-button>
+  </ng-container>
+
+  <!-- Lista de reservas (se muestra siempre que haya reservas, sin importar el filtro) -->
+  <ion-list *ngIf="reservas.length > 0">
     <ion-item *ngFor="let reserva of reservas">
       <ion-label>
         <h2>Reserva #{{ reserva.numero_reserva }}</h2>
+        <p>Cliente: {{ reserva.nombre_usuario }} {{ reserva.apellido_usuario }}</p>
+        <p>Habitación: {{ reserva.estilo_habitacion }}</p>
         <p>Fecha Inicio: {{ reserva.fecha_inicio }}</p>
         <p>Fecha Salida: {{ reserva.fecha_salida }}</p>
         <p>Total: {{ reserva.total_reserva | currency }}</p>
       </ion-label>
     </ion-item>
   </ion-list>
+
+  <!-- Mensaje si no hay reservas -->
+  <ion-text color="medium" *ngIf="reservas.length === 0">
+    <p class="ion-padding">No hay reservas para mostrar.</p>
+  </ion-text>
 </ion-content>

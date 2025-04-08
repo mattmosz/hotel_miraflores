@@ -57,6 +57,11 @@ export class ReservasService {
     const params = { op: 'todos' };
     return this.http.get<any[]>(this.apiUrl, { params }); 
   }
+
+  reservasPorFechas(fechaInicio: string, fechaFin: string): Observable<any[]> {
+    const params = { op: 'reservasPorFechas', fechaInicio, fechaFin };
+    return this.http.get<any[]>(this.apiUrl, { params });
+  }
   
 }
   
