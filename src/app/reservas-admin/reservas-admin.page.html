@@ -52,13 +52,13 @@
   <!-- Reportes -->
   <ng-container *ngIf="filtro === 'reportes'">
     <ion-item>
-      <ion-label>Desde</ion-label>
+      <ion-label class="fecha-label">Desde</ion-label>
     </ion-item>
     <ion-item>
       <ion-datetime [(ngModel)]="fechaInicio" presentation="date"></ion-datetime>
     </ion-item>
     <ion-item>
-      <ion-label>Hasta</ion-label>
+      <ion-label class="fecha-label">Hasta</ion-label>
     </ion-item>
     <ion-item>
       <ion-datetime [(ngModel)]="fechaFin" presentation="date"></ion-datetime>
