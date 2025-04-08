@@ -87,6 +87,25 @@ switch ($op) {
         echo json_encode($reservasActivas); 
         break;
 
+    case 'reservasPorFechas':
+        header('Content-Type: application/json');
+        
+        $fechaInicio = $_GET['fechaInicio'] ?? null;
+        $fechaFin = $_GET['fechaFin'] ?? null;
+        
+        if (!$fechaInicio || !$fechaFin) {
+            echo json_encode(['error' => 'Faltan parámetros']);
+            break;
+        }
+        
+        $reservas = $reservasModel->getReservasPorFechas($fechaInicio, $fechaFin);
+        
+        if ($reservas !== null) {
+            echo json_encode($reservas);
+        } else {
+            echo json_encode(['error' => 'No se encontraron reservas en el rango de fechas']);
+        }
+        break;
 
     default:
         header('Content-Type: application/json');

@@ -12,7 +12,10 @@ class ReservasModel
     }
 
     public function getTodasReservas() {
-        $query = "SELECT * FROM reservas";
+        $query = "SELECT r.*, u.nombre_usuario, u.apellido_usuario, h.estilo_habitacion 
+                  FROM reservas r
+                  INNER JOIN usuarios u ON r.id_usuario = u.id_usuario
+                  INNER JOIN habitaciones h ON r.id_habitacion = h.id_habitacion";
         $result = mysqli_query($this->conn, $query);
         $reservas = [];
         while ($row = mysqli_fetch_assoc($result)) {
@@ -123,13 +126,42 @@ class ReservasModel
     }
 
     public function getReservasActivas() {
-        $query = "SELECT * FROM reservas WHERE estado_reserva = 1";
+        $query = "SELECT r.*, u.nombre_usuario, u.apellido_usuario, h.estilo_habitacion 
+                  FROM reservas r
+                  INNER JOIN usuarios u ON r.id_usuario = u.id_usuario
+                  INNER JOIN habitaciones h ON r.id_habitacion = h.id_habitacion
+                  WHERE r.estado_reserva = 1";
         $result = mysqli_query($this->conn, $query);
         $reservas = [];
         while ($row = mysqli_fetch_assoc($result)) {
             $reservas[] = $row;
         }
         return $reservas; 
+    }
+
+    public function getReservasPorFechas($fechaInicio, $fechaFin) {
+        $query = "SELECT r.id_reserva, r.numero_reserva, r.fecha_inicio, r.fecha_salida, r.total_reserva, 
+                         h.numero_habitacion, u.nombre_usuario, u.apellido_usuario 
+                  FROM reservas r
+                  INNER JOIN habitaciones h ON r.id_habitacion = h.id_habitacion
+                  INNER JOIN usuarios u ON r.id_usuario = u.id_usuario
+                  WHERE r.fecha_inicio >= ? AND r.fecha_salida <= ?";
+        $stmt = $this->conn->prepare($query);
+    
+        if (!$stmt) {
+            error_log("Error al preparar la consulta: " . $this->conn->error);
+            return null;
+        }
+    
+        $stmt->bind_param("ss", $fechaInicio, $fechaFin);
+        $stmt->execute();
+        $result = $stmt->get_result();
+    
+        $reservas = [];
+        while ($row = $result->fetch_assoc()) {
+            $reservas[] = $row;
+        }
+        return $reservas;
     }
 }
 ?>
