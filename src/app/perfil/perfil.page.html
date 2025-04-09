@@ -1,13 +1,42 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>perfil</ion-title>
+    <ion-title>Perfil</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">perfil</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <div style="text-align: center; margin-top: 20px;">
+    <h2 style="color: black; font-weight: bold;">Bienvenido, {{ nombreUsuario }} {{ apellidoUsuario }}</h2>
+  </div>
+
+  <div style="margin-top: 20px;">
+    <h3 style="text-align: center; color: black; font-weight: bold;">
+      <ion-icon name="bed-outline" style="vertical-align: middle; margin-right: 8px;"></ion-icon>
+      Tus Reservas
+    </h3>
+    
+
+    <!-- Ion Segment para alternar entre reservas activas e historial -->
+    <ion-segment (ionChange)="cambiarFiltro($event)" value="activas">
+      <ion-segment-button value="activas">
+        <ion-label>Activas</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="historial">
+        <ion-label>Historial</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+
+    <!-- Lista de reservas -->
+    <ion-list>
+      <ion-item *ngFor="let reserva of reservas">
+        <ion-label>
+          <h2>Reserva #{{ reserva.numero_reserva }}</h2>
+          <p>Habitación: {{ reserva.numero_habitacion }}</p>
+          <p>Fecha Inicio: {{ reserva.fecha_inicio }}</p>
+          <p>Fecha Salida: {{ reserva.fecha_salida }}</p>
+          <p>Total: {{ reserva.total_reserva | currency }}</p>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </div>
 </ion-content>
