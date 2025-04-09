@@ -75,4 +75,11 @@ export class PerfilPage implements OnInit {
       );
     }
   }
+
+  cerrarSesion() {
+    localStorage.removeItem('idUsuario'); // Limpiar el almacenamiento local
+    this.nombreUsuario = ''; // Limpiar el nombre del usuario
+    this.apellidoUsuario = ''; // Limpiar el apellido del usuario
+    this.reservas = []; // Limpiar la lista de reservas
+  }
 }
