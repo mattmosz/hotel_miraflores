@@ -163,5 +163,53 @@ class ReservasModel
         }
         return $reservas;
     }
+
+    public function getReservasPorUsuario($id_usuario) {
+        $query = "SELECT r.*, h.numero_habitacion, u.nombre_usuario, u.apellido_usuario 
+                  FROM reservas r
+                  INNER JOIN habitaciones h ON r.id_habitacion = h.id_habitacion
+                  INNER JOIN usuarios u ON r.id_usuario = u.id_usuario
+                  WHERE r.id_usuario = ?";
+        $stmt = $this->conn->prepare($query);
+    
+        if (!$stmt) {
+            error_log("Error al preparar la consulta: " . $this->conn->error);
+            return null;
+        }
+    
+        $stmt->bind_param("i", $id_usuario);
+        $stmt->execute();
+        $result = $stmt->get_result();
+    
+        $reservas = [];
+        while ($row = $result->fetch_assoc()) {
+            $reservas[] = $row;
+        }
+        return $reservas;
+    }
+
+    public function getReservasPorUsuarioActivas($id_usuario) {
+        $query = "SELECT r.*, h.numero_habitacion, u.nombre_usuario, u.apellido_usuario 
+                  FROM reservas r
+                  INNER JOIN habitaciones h ON r.id_habitacion = h.id_habitacion
+                  INNER JOIN usuarios u ON r.id_usuario = u.id_usuario
+                  WHERE r.id_usuario = ? AND r.estado_reserva = 1";
+        $stmt = $this->conn->prepare($query);
+    
+        if (!$stmt) {
+            error_log("Error al preparar la consulta: " . $this->conn->error);
+            return null;
+        }
+    
+        $stmt->bind_param("i", $id_usuario);
+        $stmt->execute();
+        $result = $stmt->get_result();
+    
+        $reservas = [];
+        while ($row = $result->fetch_assoc()) {
+            $reservas[] = $row;
+        }
+        return $reservas;
+    }
 }
 ?>
