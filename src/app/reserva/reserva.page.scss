@@ -60,6 +60,7 @@ ion-card-header {
 ion-card-title {
   font-size: 18px;
   font-weight: bold;
+  color: #333; /* Cambia el color del título de la tarjeta */
 }
 
 ion-card-content {
@@ -110,6 +111,16 @@ ion-card-content .center-item {
   justify-content: center;
   align-items: center;
 }
+
+ion-datetime-button::part(native) {
+  background-color: #ffffff !important; /* Fondo blanco */
+  color: #000000 !important;            /* Texto negro */
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 8px 16px;
+  font-weight: 500;
+}
+
 
 /* Estilos para ion-datetime */
 ion-datetime {

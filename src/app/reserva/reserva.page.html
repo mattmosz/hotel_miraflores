@@ -15,7 +15,6 @@
     <ion-card-content>
       <div style="text-align: center; margin-top: 20px;">
         <div *ngIf="habitacion">
-          <h3>{{ habitacion?.estilo_habitacion }}</h3>
           <img [src]="'assets/imgs/habitaciones/' + habitacion?.foto_habitacion" alt="{{ habitacion?.titulo }}" style="width: 100%; height: auto;">
           <p>Precio/Noche: {{ habitacion?.precio_noche }}</p>
           <p>Capacidad: {{ habitacion?.capacidad_habitacion }}</p>
