@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UsuariosService } from '../servicio/usuarios.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -8,15 +8,24 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.page.scss'],
   standalone: false
 })
-
-
 export class LoginPage implements OnInit {
 
   correo_usuario: string = '';
   clave_usuario: string = '';
-  constructor(private usuariosService: UsuariosService, private router: Router) { }
+  redirectTo: string = 'checkout'; // Valor por defecto
+
+  constructor(
+    private usuariosService: UsuariosService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+      if (params['redirectTo']) {
+        this.redirectTo = params['redirectTo'];
+      }
+    });
   }
 
   login() {
@@ -25,7 +34,7 @@ export class LoginPage implements OnInit {
         if (response && response.id_usuario) {
           console.log('¡Inicio de sesión correcto!', response);
           localStorage.setItem('idUsuario', response.id_usuario);
-          this.router.navigate(['/checkout']);
+          this.router.navigate([`/${this.redirectTo}`]);
         } else {
           console.error('¡Inicio de sesión incorrecto!', response);
         }
@@ -35,17 +44,14 @@ export class LoginPage implements OnInit {
     }
   }
 
-  register(){
-
+  register() {
     this.router.navigate(['/registro']);
-
   }
-
 
   cancel() {
-      this.router.navigate(['/home']);
+    this.router.navigate(['/home']);
   }
-
 }
+
 
 

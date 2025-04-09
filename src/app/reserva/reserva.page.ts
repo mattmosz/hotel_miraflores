@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NavParams, ModalController } from '@ionic/angular';
 import { HabitacionesService } from '../servicio/habitaciones.service';
 import { ReservasService } from '../servicio/reservas.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-reserva',
@@ -20,7 +21,8 @@ export class ReservaPage implements OnInit {
     private navParams: NavParams,
     private modalController: ModalController,
     private habitacionesService: HabitacionesService,
-    private reservasService: ReservasService
+    private reservasService: ReservasService,
+    private router : Router
   ) { }
 
   ngOnInit() {
@@ -84,7 +86,7 @@ export class ReservaPage implements OnInit {
     this.modalController.dismiss().then(() => {
       localStorage.setItem('fechaInicio', datosReserva.fechaInicio);
       localStorage.setItem('fechaSalida', datosReserva.fechaSalida);
-      window.location.href = '/login';
+      this.router.navigate(['/login'], { queryParams: { redirectTo: 'checkout' } });
     });
     
   }

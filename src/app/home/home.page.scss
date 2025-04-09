@@ -112,3 +112,44 @@ ion-title {
   height: 100%;
   border: 0;
 }
+
+ion-menu {
+  --background: #ff9800; /* Fondo del menú */
+  color: #fff; /* Color del texto */
+}
+
+/* Estilos para el encabezado del menú */
+ion-menu ion-header {
+  background-color: #ff9800; /* Fondo del encabezado */
+  color: #fff; /* Color del texto */
+}
+
+/* Estilos para los elementos del menú */
+ion-menu ion-content {
+  background-color: #ff9800; /* Fondo del contenido */
+  color: #fff; /* Color del texto */
+}
+
+ion-menu ion-item {
+  --background: transparent; /* Fondo transparente para los elementos */
+  --color: #fff; /* Color del texto */
+}
+
+ion-menu ion-item ion-icon {
+  color: #fff; /* Color de los íconos */
+}
+
+ion-menu ion-item:hover {
+  --background: rgba(255, 255, 255, 0.2); /* Fondo al pasar el mouse */
+}
+
+/* Estilos para los íconos dentro del menú */
+ion-menu ion-icon {
+  color: #fff; /* Color de los íconos */
+}
+
+/* Estilos para el texto dentro del menú */
+ion-menu ion-label {
+  color: #fff; /* Color del texto */
+  font-weight: bold; /* Negrita para el texto */
+}

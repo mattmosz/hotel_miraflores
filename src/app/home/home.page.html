@@ -1,12 +1,31 @@
+<ion-menu content-id="main-content">
+  <ion-header>
+    <ion-toolbar color="white">
+      <ion-title>Menú</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+      <ion-item button (click)="navigateToLogin()">
+        <ion-icon name="person-outline" slot="start"></ion-icon>
+        <ion-label>Iniciar Sesión</ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+
 <ion-header [translucent]="false">
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
     <ion-title>
       Hotel Miraflores
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" style="overflow-y: auto;">
+<ion-content [fullscreen]="true" id="main-content" style="overflow-y: auto;">
   <div style="text-align: center; margin-top: 20px;">
     <img src="assets/imgs/logo hotel.jpg" alt="Hotel Logo" style="width: 100px; height: auto;">
     <h2>Bienvenidos</h2>
@@ -30,7 +49,7 @@
           <ion-card-title>{{ habitacion.estilo_habitacion }}</ion-card-title>
         </ion-card-header>
         <ion-card-content>
-            <img [src]="'assets/imgs/habitaciones/' + habitacion.foto_habitacion" alt="{{ habitacion.titulo }}" style="width: 100%; height: auto;">
+          <img [src]="'assets/imgs/habitaciones/' + habitacion.foto_habitacion" alt="{{ habitacion.titulo }}" style="width: 100%; height: auto;">
           <p>Precio: {{ habitacion.precio_noche }}</p>
           <p>Capacidad: {{ habitacion.capacidad_habitacion }}</p>
           <p>Descripción: {{ habitacion.descripcion_habitacion }}</p>
