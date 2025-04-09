@@ -107,6 +107,44 @@ switch ($op) {
         }
         break;
 
+    case 'reservasPorUsuario':
+        header('Content-Type: application/json');
+        
+        $id_usuario = $_GET['id_usuario'] ?? null;
+        
+        if (!$id_usuario) {
+            echo json_encode(['error' => 'Faltan parámetros']);
+            break;
+        }
+        
+        $reservasPorUsuario = $reservas->getReservasPorUsuario($id_usuario);
+        
+        if ($reservasPorUsuario !== null) {
+            echo json_encode($reservasPorUsuario);
+        } else {
+            echo json_encode(['error' => 'No se encontraron reservas para el usuario']);
+        }
+        break;
+
+    case 'reservasPorUsuarioActivas':
+        header('Content-Type: application/json');
+        
+        $id_usuario = $_GET['id_usuario'] ?? null;
+        
+        if (!$id_usuario) {
+            echo json_encode(['error' => 'Faltan parámetros']);
+            break;
+        }
+        
+        $reservasPorUsuarioActivas = $reservas->getReservasPorUsuarioActivas($id_usuario);
+        
+        if ($reservasPorUsuarioActivas !== null) {
+            echo json_encode($reservasPorUsuarioActivas);
+        } else {
+            echo json_encode(['error' => 'No se encontraron reservas activas para el usuario']);
+        }
+        break;
+
     default:
         header('Content-Type: application/json');
         echo json_encode(array("error" => "Invalid operation"));
