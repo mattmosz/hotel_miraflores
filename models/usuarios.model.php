@@ -155,4 +155,23 @@ class UsuariosModel
             return false;
         }
     }
+
+    public function eliminar($id_usuario){
+        $query = "DELETE FROM usuarios WHERE id_usuario = ?";
+        $stmt = $this->conn->prepare($query);
+
+        if (!$stmt) {
+            error_log("Error al preparar la consulta: " . $this->conn->error);
+            return false;
+        }
+
+        $stmt->bind_param("i", $id_usuario);
+
+        if ($stmt->execute()) {
+            return true;
+        } else {
+            error_log("Error al ejecutar la consulta: " . $stmt->error);
+            return false;
+        }
+    }
 }

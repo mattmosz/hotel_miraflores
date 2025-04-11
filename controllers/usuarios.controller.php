@@ -158,6 +158,28 @@ switch ($op) {
         }
         break;
 
+    case 'eliminar':
+        header('Content-Type: application/json');
+    
+        // Obtener el ID del usuario a eliminar
+        $id_usuario = $data['id_usuario'] ?? null;
+    
+        // Validar que el ID esté presente
+        if (!$id_usuario) {
+            echo json_encode(['error' => 'Faltan parámetros']);
+            break;
+        }
+    
+        // Eliminar el usuario
+        $resultado = $usuarios->eliminar($id_usuario);
+    
+        if ($resultado) {
+            echo json_encode(['success' => true, 'message' => 'Usuario eliminado correctamente']);
+        } else {
+            echo json_encode(['success' => false, 'error' => 'No se pudo eliminar el usuario']);
+        }
+        break;
+
     default:
         header('Content-Type: application/json');
         echo json_encode(['error' => 'Operación no válida']);
