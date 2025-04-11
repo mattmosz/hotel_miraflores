@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { UsuariosService } from '../servicio/usuarios.service';
 import { Router } from '@angular/router';
+import { ModalController } from '@ionic/angular';
+import { EditarUsuarioModalComponent } from '../editar-usuario-modal/editar-usuario-modal.component';
 
 @Component({
   selector: 'app-clientes',
@@ -13,7 +15,11 @@ export class ClientesPage implements OnInit {
   usuariosFiltrados: any[] = []; // Lista filtrada de usuarios
   searchTerm: string = ''; // Término de búsqueda
 
-  constructor(private usuariosService: UsuariosService, private router : Router) {}
+  constructor(
+    private usuariosService: UsuariosService,
+    private router: Router,
+    private modalController: ModalController
+  ) {}
 
   ngOnInit() {
     this.obtenerUsuarios(); // Cargar la lista de usuarios al iniciar la página
@@ -41,9 +47,20 @@ export class ClientesPage implements OnInit {
     );
   }
 
-  editarUsuario(usuario: any) {
-    console.log('Editar usuario:', usuario);
-    // Aquí puedes redirigir a una página de edición o abrir un modal
+  async editarUsuario(usuario: any) {
+    const modal = await this.modalController.create({
+      component: EditarUsuarioModalComponent,
+      componentProps: { idUsuario: usuario.id_usuario }
+    });
+
+    modal.onDidDismiss().then((result) => {
+      if (result.data) {
+        console.log('Datos actualizados:', result.data);
+        // Aquí puedes actualizar la lista de usuarios si es necesario
+      }
+    });
+
+    return await modal.present();
   }
 
   eliminarUsuario(idUsuario: number) {

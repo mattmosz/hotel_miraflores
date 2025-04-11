@@ -6,13 +6,16 @@ import { HttpClientModule } from '@angular/common/http'; // Importar HttpClientM
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { EditarUsuarioModalComponent } from './editar-usuario-modal/editar-usuario-modal.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, EditarUsuarioModalComponent],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
+    FormsModule,
     HttpClientModule // Añadir HttpClientModule a los imports
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],

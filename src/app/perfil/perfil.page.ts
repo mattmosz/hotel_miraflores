@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UsuariosService } from '../servicio/usuarios.service';
 import { ReservasService } from '../servicio/reservas.service';
+import { MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-perfil',
@@ -16,16 +17,19 @@ export class PerfilPage implements OnInit {
 
   constructor(
     private usuariosService: UsuariosService,
-    private reservasService: ReservasService
+    private reservasService: ReservasService,
+    private menu: MenuController
   ) {}
 
   ngOnInit() {
+    this.menu.enable(true); // Habilitar el menú lateral
     const idUsuario = localStorage.getItem('idUsuario'); // Obtener el ID del usuario desde localStorage
     if (idUsuario) {
       const id = parseInt(idUsuario, 10);
       this.obtenerUsuario(id); // Obtener los datos del usuario
       this.obtenerReservas(id); // Obtener las reservas según el filtro inicial
     }
+    
   }
 
   cambiarFiltro(event: any) {

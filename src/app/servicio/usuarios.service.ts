@@ -50,4 +50,14 @@ export class UsuariosService {
     const params = { op: 'todos' };
     return this.http.get<any[]>(this.apiUrl, { params });
   }
+
+  actualizarUsuario(usuario: any): Observable<any> {
+    const body = { op: 'actualizar', ...usuario };
+  
+    return this.http.post<any>(this.apiUrl, body, {
+      headers: { 'Content-Type': 'application/json' }
+    });
+  }
+
+  
 }
