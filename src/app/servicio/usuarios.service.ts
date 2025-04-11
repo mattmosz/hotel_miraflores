@@ -59,5 +59,12 @@ export class UsuariosService {
     });
   }
 
+  eliminarUsuario(idUsuario: number): Observable<any> {
+    const body = { op: 'eliminar', id_usuario: idUsuario };
+    return this.http.post<any>(this.apiUrl, body, {
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
+
   
 }

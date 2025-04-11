@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UsuariosService } from '../servicio/usuarios.service';
 import { Router } from '@angular/router';
-import { ModalController } from '@ionic/angular';
+import { ModalController, AlertController, ToastController } from '@ionic/angular';
 import { EditarUsuarioModalComponent } from '../editar-usuario-modal/editar-usuario-modal.component';
 
 @Component({
@@ -18,7 +18,9 @@ export class ClientesPage implements OnInit {
   constructor(
     private usuariosService: UsuariosService,
     private router: Router,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private alertController: AlertController,
+    private toastController: ToastController,
   ) {}
 
   ngOnInit() {
@@ -63,9 +65,57 @@ export class ClientesPage implements OnInit {
     return await modal.present();
   }
 
-  eliminarUsuario(idUsuario: number) {
-    console.log('Eliminar usuario con ID:', idUsuario);
-    // Aquí puedes implementar la lógica para eliminar el usuario
+  async eliminarUsuario(idUsuario: number) {
+    // Mostrar cuadro de confirmación
+    console.log('ID del usuario a eliminar:', idUsuario);
+    const alert = await this.alertController.create({
+      header: 'Confirmar eliminación',
+      message: '¿Está seguro de que desea eliminar este usuario?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          handler: () => {
+            console.log('Eliminación cancelada');
+          },
+        },
+        {
+          text: 'Sí, eliminar',
+          handler: async () => {
+            // Llamar a la función de eliminar usuario
+            this.usuariosService.eliminarUsuario(idUsuario).subscribe(
+              async (response: any) => {
+                if (response.success) {
+                  // Mostrar un Toast de éxito
+                  const toast = await this.toastController.create({
+                    message: 'Usuario eliminado correctamente',
+                    duration: 2000,
+                    color: 'success',
+                  });
+                  await toast.present();
+
+                  // Actualizar la lista de usuarios
+                  this.obtenerUsuarios();
+                } else {
+                  console.error('Error al eliminar el usuario:', response.error);
+                }
+              },
+              async (error) => {
+                console.error('Error en la solicitud:', error);
+                const toast = await this.toastController.create({
+                  message: 'Error al eliminar el usuario',
+                  duration: 2000,
+                  color: 'danger',
+                });
+                await toast.present();
+              }
+            );
+          },
+        },
+      ],
+    });
+
+    await alert.present();
   }
 
   logout() {
