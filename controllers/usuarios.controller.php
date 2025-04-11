@@ -130,6 +130,34 @@ switch ($op) {
         echo json_encode(['total' => $totalClientes]);
         break;
 
+    case 'actualizar':
+        header('Content-Type: application/json');
+    
+        // Obtener los datos enviados desde el cliente
+        $id_usuario = $data['id_usuario'] ?? null;
+        $nombre_usuario = $data['nombre_usuario'] ?? null;
+        $apellido_usuario = $data['apellido_usuario'] ?? null;
+        $usuario = $data['usuario'] ?? null;
+        $correo_usuario = $data['correo_usuario'] ?? null;
+        $direccion_usuario = $data['direccion_usuario'] ?? null;
+        $telefono_usuario = $data['telefono_usuario'] ?? null;
+    
+        // Validar que todos los parámetros estén presentes
+        if (!$id_usuario || !$nombre_usuario || !$apellido_usuario || !$usuario || !$correo_usuario || !$direccion_usuario || !$telefono_usuario) {
+            echo json_encode(['error' => 'Faltan parámetros']);
+            break;
+        }
+    
+        // Actualizar el usuario
+        $resultado = $usuarios->actualizar($id_usuario, $nombre_usuario, $apellido_usuario, $usuario, $correo_usuario, $direccion_usuario, $telefono_usuario);
+    
+        if ($resultado) {
+            echo json_encode(['success' => true, 'message' => 'Usuario actualizado correctamente']);
+        } else {
+            echo json_encode(['success' => false, 'error' => 'No se pudo actualizar el usuario']);
+        }
+        break;
+
     default:
         header('Content-Type: application/json');
         echo json_encode(['error' => 'Operación no válida']);
