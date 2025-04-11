@@ -55,7 +55,7 @@ class UsuariosModel
 
     public function uno($id_usuario)
     {
-        $query = "SELECT nombre_usuario, apellido_usuario FROM usuarios WHERE id_usuario = ?";
+        $query = "SELECT * FROM usuarios WHERE id_usuario = ?";
         $stmt = $this->conn->prepare($query);
 
         if (!$stmt) {
@@ -135,5 +135,24 @@ class UsuariosModel
         $result = mysqli_query($this->conn, $query);
         $row = mysqli_fetch_assoc($result);
         return $row['total'];
+    }
+
+    public function actualizar($id_usuario, $nombre_usuario, $apellido_usuario, $usuario, $correo_usuario, $direccion_usuario, $telefono_usuario){
+        $query = "UPDATE usuarios SET nombre_usuario = ?, apellido_usuario = ?, usuario = ?, correo_usuario = ?, direccion_usuario = ?, telefono_usuario = ? WHERE id_usuario = ?";
+        $stmt = $this->conn->prepare($query);
+
+        if (!$stmt) {
+            error_log("Error al preparar la consulta: " . $this->conn->error);
+            return false;
+        }
+
+        $stmt->bind_param("ssssssi", $nombre_usuario, $apellido_usuario, $usuario, $correo_usuario, $direccion_usuario, $telefono_usuario, $id_usuario);
+
+        if ($stmt->execute()) {
+            return true;
+        } else {
+            error_log("Error al ejecutar la consulta: " . $stmt->error);
+            return false;
+        }
     }
 }
