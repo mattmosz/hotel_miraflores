@@ -50,13 +50,13 @@ export class ClientesPage implements OnInit {
   async editarUsuario(usuario: any) {
     const modal = await this.modalController.create({
       component: EditarUsuarioModalComponent,
-      componentProps: { idUsuario: usuario.id_usuario }
+      componentProps: { idUsuario: usuario.id_usuario },
     });
 
     modal.onDidDismiss().then((result) => {
       if (result.data) {
         console.log('Datos actualizados:', result.data);
-        // Aquí puedes actualizar la lista de usuarios si es necesario
+        this.obtenerUsuarios(); // Actualizar la lista de usuarios
       }
     });
 

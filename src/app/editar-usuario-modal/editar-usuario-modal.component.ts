@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, ToastController } from '@ionic/angular';
 import { UsuariosService } from '../servicio/usuarios.service';
 
 @Component({
@@ -14,7 +14,8 @@ export class EditarUsuarioModalComponent implements OnInit {
 
   constructor(
     private usuariosService: UsuariosService,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private toastController: ToastController
   ) {}
 
   ngOnInit() {
@@ -37,9 +38,34 @@ export class EditarUsuarioModalComponent implements OnInit {
     );
   }
 
-  guardarCambios() {
-    console.log('Datos actualizados:', this.usuario);
-    this.modalController.dismiss(this.usuario); // Cierra el modal y devuelve los datos actualizados
+  async guardarCambios() {
+    this.usuariosService.actualizarUsuario(this.usuario).subscribe(
+      async (response: any) => {
+        if (response.success) {
+          // Mostrar un Toast con el mensaje de éxito
+          const toast = await this.toastController.create({
+            message: 'Usuario actualizado correctamente',
+            duration: 2000,
+            color: 'success',
+          });
+          await toast.present();
+
+          // Cerrar el modal y devolver los datos actualizados
+          this.modalController.dismiss(this.usuario);
+        } else {
+          console.error('Error al actualizar el usuario:', response.error);
+        }
+      },
+      async (error) => {
+        console.error('Error en la solicitud:', error);
+        const toast = await this.toastController.create({
+          message: 'Error al actualizar el usuario',
+          duration: 2000,
+          color: 'danger',
+        });
+        await toast.present();
+      }
+    );
   }
 
   cerrarModal() {
